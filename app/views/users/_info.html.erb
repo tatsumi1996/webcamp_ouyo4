@@ -1,0 +1,34 @@
+<table class='table'>
+  <tr><%= attachment_image_tag(user, :profile_image, :fill, 100, 100, fallback: "no_image.jpg") %></tr>
+  <tr>
+	  <th>name</th>
+	  <th><%= user.name %></th>
+  </tr>
+  <tr>
+	  <th>introduction</th>
+	  <th><%= user.introduction %></th>
+  </tr>
+  <tr>
+    <th><%= "フォロー数" %></th>
+    <th><%= link_to user.follower.count, user_followings_path(user.id) %></th>
+  </tr>
+  <tr>
+    <th><%= "フォロワー数" %></th>
+    <th><%= link_to user.followed.count, user_followers_path(user.id) %></th>
+  </tr>
+  <tr>
+    <th>
+      <% unless user == current_user %>
+        <% if current_user.following?(user) %>
+          <%= link_to 'フォロー外す', unfollow_path(user.id), class: "btn btn-info btn-sm btn-block mb-3", method: :POST %>
+        <% else %>
+          <%= link_to 'フォローする', follow_path(user.id), class: "btn btn-success btn-sm btn-block mb-3", method: :POST %>
+        <% end %>
+      <% end %>
+    </th>
+  </tr>
+</table>
+
+<div class='row'>
+  <%= link_to '',edit_user_path(user),class: "btn btn-outline-secondary btn-block fas fa-user-cog edit_user_#{user.id}" %>
+</div>
